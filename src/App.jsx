@@ -1,17 +1,23 @@
 import Navbar from './components/Navbar/Navbar'
 import ItemListContainer from './components/ItemListContainer/ItemListContainer';
-import ItemCount from './components/ItemCount/ItemCount';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { getAllProducts } from './api/products';
+import { useEffect, useState } from 'react';
+
 
 function App() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    getAllProducts().then((products) => {
+      setProducts(products);
+    });
+  }, []);
 
   return (
     <div className="App">
       <Navbar />
-      <ItemListContainer greeting="Bienvenido a mi tienda" />
-      <div className='col-2'>
-        <ItemCount/>
-      </div>
+      <ItemListContainer products={products} />
       
     </div>
   )
