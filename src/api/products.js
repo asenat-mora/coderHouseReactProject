@@ -1,3 +1,4 @@
+//Mock api asincrono
 const products = [
   {
     id: 1,
@@ -87,7 +88,6 @@ const products = [
     pictureUrl: "https://cdn1.coppel.com/images/catalog/pm/2356433-1.jpg",
     stock: 5
   },
-  
 
 ]
 
@@ -102,7 +102,7 @@ function getAllProducts(){
 function getProductById(id){
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const product = products.find(product => product.id === id)
+      const product = products.find(product => product.id === id) //iterar sobre el arreglo de productos y encontrar el producto con el id que se recibe como parametro
       resolve(product)
     }, 2000)
   });

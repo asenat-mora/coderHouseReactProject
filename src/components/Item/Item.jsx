@@ -1,18 +1,16 @@
+//componente que muestra la informacion de cada producto
 import Card from 'react-bootstrap/Card';
-import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import './Item.css';
 
-function Item({item}){
-  const [stock, setStock] = useState(item.stock);
-
+function Item({id, title, price, pictureUrl, stock}){
   return (
     <Card className='m-3'>
-      <Card.Img variant="top" id="img-fixed-size" src={item.pictureUrl}/>
+      <Card.Img variant="top" id="img-fixed-size" src={pictureUrl}/>
       <Card.Body>
-        <Card.Title>{item.title}</Card.Title>
+        <Card.Title>{title}</Card.Title>
         <Card.Text>
-          Precio: ${item.price}
+          Precio: ${price}
         </Card.Text>
         <Card.Text>
           Stock: {stock}
