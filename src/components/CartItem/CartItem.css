@@ -1,0 +1,8 @@
+#closeButton{
+  align-self: flex-end;
+}
+
+#header{
+  display: flex;
+  justify-content: space-between;
+}

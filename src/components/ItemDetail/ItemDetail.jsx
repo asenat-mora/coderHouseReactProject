@@ -1,8 +1,26 @@
 import Card from 'react-bootstrap/Card';
 import ItemCount from '../ItemCount/ItemCount';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getProductById } from '../../api/products';
+import { useContext } from 'react';
+import { CartContext } from '../../context/CartContext';
 
-function ItemDetail({item}){
-  const [stock, setStock] = useState(item.stock);
+function ItemDetail(){
+  const { itemId } = useParams();
+  const { addItem } = useContext(CartContext);
+  const [item, setItem] = useState({});
+
+  useEffect(() => {
+    getProductById(itemId).then(item => {
+      setItem(item);
+    })
+  }, [itemId]);
+
+  function addToCart(quantity){
+    addItem(item, quantity);
+  }
+
   return (
     <Card className='m-3'>
       <Card.Img variant="top" id="img-fixed-size" src={item.pictureUrl}/>
@@ -12,12 +30,12 @@ function ItemDetail({item}){
           Precio: ${item.price}
         </Card.Text>
         <Card.Text>
-          Descripcion: ${item.price}
+          Descripcion: {item.description}
         </Card.Text>
         <Card.Text>
-          Stock: {stock}
+          Stock: {item.stock}
         </Card.Text>
-        <ItemCount stock={item.stock} setStock={setStock}/>
+        <ItemCount stock={item.stock} addToCartFunction={addToCart}/>
       </Card.Body>
     </Card>
   )

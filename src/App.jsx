@@ -1,27 +1,32 @@
 import Navbar from './components/Navbar/Navbar'
 import ItemListContainer from './components/ItemListContainer/ItemListContainer';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { getAllProducts } from './api/products';
-import { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import ItemDetail from './components/ItemDetail/ItemDetail';
+import { CartProvider } from './context/CartContext';
+import CartView from './components/CartView/CartView';
 
 //componente principal, componente padre que se encarga de renderizar toda la pag y los otros componentes
 function App() {
-  const [products, setProducts] = useState([]);// [valor del producto, setear/para cambiar la lista] = llamado al hoock con estado inicial [vacio]
 
-  useEffect(() => {//
-    getAllProducts().then((productList) => {//de la api product, resuelve la promesa para obtener la lista de productos
-      setProducts(productList);//guarda la lista de productos en el estado y al final queda en products
-    });
-  }, []);
 
-  return (//nombre de propiedad = {valor del estado} de la linea 21
-    //el componente recibe la propiedad la cual es una lista de productos
+  return (
     <div className="App">
-      <Navbar />
-      <ItemListContainer products={products} />
-      
+      <BrowserRouter>
+        <CartProvider>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<ItemListContainer />} />
+            <Route path="/brand/:brandId" element={<ItemListContainer />} />
+            <Route path="/item/:itemId" element={<ItemDetail />} />
+            <Route path="/cart" element={<CartView />} />
+            <Route path="*" element={<h1>404 Not Found</h1>} />
+          </Routes>
+        </CartProvider>
+      </BrowserRouter>
     </div>
   )
 }
 
-export default App
+export default App;
