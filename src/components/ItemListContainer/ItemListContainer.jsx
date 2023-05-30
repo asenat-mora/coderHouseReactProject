@@ -2,22 +2,23 @@ import Item from '../Item/Item';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { useEffect, useState } from 'react';
-import { getProductsByBrand, getAllProducts } from '../../api/products';
 import { useParams } from 'react-router-dom';
+import useGetProducts from '../../hooks/useGetProducts';
 
 //componente para pintar una lista de  productos
 function ItemListContainer() { 
   const { brandId } = useParams();//para obtener el id de la marca de la url
-  const [products, setProducts] = useState([]);// [valor del producto, setear/para cambiar la lista] = llamado al hoock con estado inicial [vacio]
+  //const [products, setProducts] = useState([]);// [valor del producto, setear/para cambiar la lista] = llamado al hoock con estado inicial [vacio]
 
-  useEffect(() => {
+  const { products, loading  } = useGetProducts(brandId);//llamado al hoock con estado inicial [vacio]
+
+  /* useEffect(() => {
     const func = brandId ? getProductsByBrand : getAllProducts;//si hay brandId, se llama a getProductsByBrand, sino a getAllProducts
 
     func(brandId).then(productList => {//de la api product, resuelve la promesa para obtener la lista de productos
       setProducts(productList);//guarda la lista de productos en el estado y al final queda en products
     })
-  }, [brandId]);
+  }, [brandId]); */
 
   return (
     <Container>
